@@ -1,6 +1,8 @@
 /app/config/database.php
 /bootstrap/compiled.php 
-/vendor composer.phar 
+/vendor 
+/public/uploads
+composer.phar 
 composer.lock 
 .env.*.php 
 .env.php 
