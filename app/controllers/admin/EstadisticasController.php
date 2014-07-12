@@ -35,9 +35,12 @@ class Admin_EstadisticasController extends \BaseController {
 		return View::make('admin/estadisticas/inicio', compact('ruta', 'revision', 'solicitudes', 'estadisticas', 'devolucion', 'sistemas', 'tipo_orden'));
 	}
 
-	public function getConfecha(){
+	public function postConfecha(){
 		$fechaInicio = Input::get('fechaInicio');
 		$fechaFinal = Input::get('fechaFinal');
+
+		//return Redirect::to(Input::get('ruta'))->with('fechaInicio',$fechaInicio);
+
 
 		return Redirect::route(Input::get('ruta'), array('fechaInicio' => $fechaInicio, 'fechaFinal' => $fechaFinal));
 	}
@@ -136,7 +139,7 @@ class Admin_EstadisticasController extends \BaseController {
 	}
 
 	public function getEjecucionesrev(){
-		$fechaInicio = Input::get('fechaInicio');
+		/*$fechaInicio = Input::get('fechaInicio');
 		$fechaFinal = Input::get('fechaFinal');
 
 		$atributos = array('orden_id', 'fecha', 'cliente_id', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'produccion', 'recuperacion');
@@ -152,7 +155,7 @@ class Admin_EstadisticasController extends \BaseController {
 							->paginate(12);
 		
 		return View::make('admin/estadisticas/layoutlist', compact('fechaInicio', 'fechaFinal', 'nombreEstadistica', 'nombreModelo', 'atributos', 'nombresAtributos', 'modelos', 'totales'));
-	}
+	*/}
 
 	public function postEjecucionesrev(){
 		$fechaInicio = Input::get('fechaInicio');

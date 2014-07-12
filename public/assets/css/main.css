@@ -1,0 +1,105 @@
+.wrap{
+	margin-top: 5em;
+	min-height: 500px;
+}
+
+.title {
+  text-align: center; 
+  margin-bottom: 25px;
+}
+
+.panel-heading>h2{
+  font-size: 18px;
+  margin: 0;
+  display: inline-block;
+}
+
+.panel-heading>a{
+  text-align: right !important;
+  display: inline-block;
+}
+
+.panel-heading>h3{
+  font-size: 16px;
+  margin: 0;
+}
+
+.panel-body>p{
+  font-size: 15px;
+}
+
+input[type="file"]  {
+  display: inline-block !important;
+}
+.navbar-inverse {
+  background-color: #f47063 !important;
+  border-color: #f25444 !important;
+}
+
+.navbar-inverse .navbar-brand {
+  color: #999999 !important;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+.navbar-inverse .navbar-text {
+  color: white !important;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: white !important;
+  font-size: 16px;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #ffffff !important;
+  background-color: none !important;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color: none !important;
+  background-color: #f47063 !important;
+}
+
+.navbar-inverse .navbar-nav > .disabled > a,
+.navbar-inverse .navbar-nav > .disabled > a:hover,
+.navbar-inverse .navbar-nav > .disabled > a:focus {
+  color: #444444 !important;
+  background-color: none !important;
+}
+
+.navbar-inverse .navbar-toggle {
+  border-color: #333333 !important;
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+  background-color: none !important;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+  background-color: none !important;
+}
+
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+  border-color: #101010 !important;
+}
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  color: #ffffff !important;
+  background-color: none !important;
+}
+
+.invisible {
+  display:none;
+}
