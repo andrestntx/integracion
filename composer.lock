@@ -330,12 +330,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "5c16975480d5bb234f6c623698209eb7cac0c376"
+                "reference": "2340d8874c4629789e67eee5c338c40b17802ab8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/5c16975480d5bb234f6c623698209eb7cac0c376",
-                "reference": "5c16975480d5bb234f6c623698209eb7cac0c376",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/2340d8874c4629789e67eee5c338c40b17802ab8",
+                "reference": "2340d8874c4629789e67eee5c338c40b17802ab8",
                 "shasum": ""
             },
             "require": {
@@ -439,7 +439,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2014-07-11 19:36:34"
+            "time": "2014-07-13 02:30:18"
         },
         {
             "name": "maatwebsite/excel",
@@ -447,12 +447,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "abaf9bea6549a5aba797b7b9622c985f23bd89c9"
+                "reference": "fb70f0ecd76604a0ed6050d5b33f93fedabe1718"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/abaf9bea6549a5aba797b7b9622c985f23bd89c9",
-                "reference": "abaf9bea6549a5aba797b7b9622c985f23bd89c9",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/fb70f0ecd76604a0ed6050d5b33f93fedabe1718",
+                "reference": "fb70f0ecd76604a0ed6050d5b33f93fedabe1718",
                 "shasum": ""
             },
             "require": {
@@ -494,7 +494,7 @@
                 "import",
                 "laravel"
             ],
-            "time": "2014-07-11 18:33:02"
+            "time": "2014-07-12 14:40:45"
         },
         {
             "name": "monolog/monolog",
@@ -615,32 +615,32 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "0.9.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "5960ecfc105011b8d1bfedf7647b4b8989dbcb4c"
+                "reference": "2e195d7cb2deebfd2f31e63bdd442bb235bd0149"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/5960ecfc105011b8d1bfedf7647b4b8989dbcb4c",
-                "reference": "5960ecfc105011b8d1bfedf7647b4b8989dbcb4c",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/2e195d7cb2deebfd2f31e63bdd442bb235bd0149",
+                "reference": "2e195d7cb2deebfd2f31e63bdd442bb235bd0149",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
-                "php": ">=5.2"
+                "php": ">=5.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.9-dev"
+                    "dev-master": "1.0-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "PHPParser": "lib/"
-                }
+                "files": [
+                    "lib/bootstrap.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -656,7 +656,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2014-04-19 20:26:05"
+            "time": "2014-04-21 09:15:33"
         },
         {
             "name": "patchwork/utf8",
@@ -822,12 +822,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "8b8c62f278e363b75ddcacaf5803710232fbd3e4"
+                "reference": "5a5d0fcf569f28e05a5a795fef9af101ece2c502"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/8b8c62f278e363b75ddcacaf5803710232fbd3e4",
-                "reference": "8b8c62f278e363b75ddcacaf5803710232fbd3e4",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/5a5d0fcf569f28e05a5a795fef9af101ece2c502",
+                "reference": "5a5d0fcf569f28e05a5a795fef9af101ece2c502",
                 "shasum": ""
             },
             "require": {
@@ -911,7 +911,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2014-07-05 16:36:21"
+            "time": "2014-07-12 10:08:34"
         },
         {
             "name": "predis/predis",
