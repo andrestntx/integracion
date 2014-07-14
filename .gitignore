@@ -7,4 +7,5 @@ composer.phar
 .DS_Store
 Thumbs.db
 .prueba.txt
+.env.*.php
 .env.php
