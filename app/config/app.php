@@ -15,6 +15,8 @@ return array(
 
 	'debug' => true,
 
+	'cipher' => MCRYPT_RIJNDAEL_256, 
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application URL
@@ -116,6 +118,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'yajra\Oci8\Oci8ServiceProvider',
 		'Illuminate\Remote\RemoteServiceProvider',
+
 	),
 
 	/*
