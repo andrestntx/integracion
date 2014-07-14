@@ -18,7 +18,7 @@
 	      	<div class="container" style="margin-top:50px;">
 			<div class="row col-sm-12">
 				<div class="row col-sm-6">
-					{{HTML::image('uploads/inicio.jpg', 'Sypelc', array('style' => 'width:90%; margin: 0 5% 0 5%') ) }}
+					{{HTML::image('images/inicio.jpg', 'Sypelc', array('style' => 'width:90%; margin: 0 5% 0 5%') ) }}
 				</div>
 			<div class="row col-sm-6">
 				<h3>Iniciar Sesión</h3>
