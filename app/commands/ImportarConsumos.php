@@ -36,14 +36,10 @@ class ImportarConsumos extends Command {
 	 * @return void
 	 */
 	public function fire(){
-
 		$atributos = null;
 		$tipoArchivo = Archivo::find('cons');
 		$id = $tipoArchivo->id.str_random(8);
-	    $resultado = new Importacion;
-	    $resultado->id = $id;
-	    $resultado->archivo_id = $tipoArchivo->id;
-	    $resultado->save();
+        $importacion = Importacion::crear($id, $tipoArchivo->id);
 	    $contador = 0;
 	    $descartadas = 0;
 	    $nosypelc = 0;
@@ -56,15 +52,10 @@ class ImportarConsumos extends Command {
 
 		foreach ($datos as $line) {
 			$contador++;
-		    $cont = count($line);
-		    for($i=0 ; $i<$cont; $i++){
-		        $line[$i] = utf8_decode(str_replace('Ñ','N',utf8_encode(str_replace('Ñ', 'N', $line[$i]))));
-		        $line[$i] = trim(htmlentities($line[$i], ENT_QUOTES | ENT_IGNORE, "UTF-8"));
-		    }
-		    
-		    $motivo = Importer::validarArchivo($tipoArchivo, $line, $posiciones, $id);
+		    $line = Conversions::array_to_utf8($line);
+            $motivo = Validations::fileType($tipoArchivo, $line, $posiciones);
 		    if($motivo == 0){
-		    	$respuesta = MyQueue::archivoConsumos($id, $line, $posiciones, $atributos); 
+                $respuesta = ImportFile::selectFileType($id, $line, $tipoArchivo->id, $posiciones, $atributos);
 				if($respuesta){
 			        $descartadas++;  
 			    }
