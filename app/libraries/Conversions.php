@@ -26,7 +26,7 @@ class Conversions{
 		}
 		foreach ($array as $value) {
 			if(is_array($value) || is_object($value)){
-				$result[] = MyQueue::remove_key_from_array($value); 	
+				$result[] = Conversions::remove_key_from_array($value); 	
 			}
 			else{
 				array_push($result, $value);
