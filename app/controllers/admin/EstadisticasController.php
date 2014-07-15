@@ -225,19 +225,29 @@ class Admin_EstadisticasController extends \BaseController {
 		$tableName = Input::get('tableName');
 		$value = Input::get('value');
 		$buscarpor = Input::get('buscarpor');
+		$models = null;
 
 		try {
-			$model = DB::table($tableName)->where($buscarpor, '=', $value)->first();	
+			$numModels = DB::table($tableName)->where($buscarpor, '=', $value)->count();
+			if($numModels == 1){
+				$models = DB::table($tableName)->where($buscarpor, '=', $value)->first();	
+			}
+			else if($numModels > 1){
+				$models = DB::table($tableName)->where($buscarpor, '=', $value)->paginate(12);
+			}
 		} catch (Exception $e) {
 			App::abort(404);	
 		}
 
-		if($model){
-			if($modelsName == 'revisiones' || $modelsName == 'solicitudes'){
-				return Redirect::route('admin.'.$modelsName.'.show', array($model->orden_id));	
+		if($models){
+			if($numModels == 1){
+				return Redirect::route('admin.'.$modelsName.'.show', array($models->id));
 			}
 			else{
-				return Redirect::route('admin.'.$modelsName.'.show', array($model->id));
+				$attributes = array('consecutivo', 'dependencia_id','solicitud', 'cliente_id', 'nombre');
+				$attributeNames = array('Consecutivo', 'Dependencia','Solicitud', 'Cliente', 'Municipio');
+				$buscarpor = array('id' => 'Orden', 'solicitud' => 'Solicitud');
+				return View::make('admin/layoutlist', compact('models', 'modelsName', 'attributes', 'attributeNames', 'buscarpor', 'tableName'));
 			}
 		}
 		else{

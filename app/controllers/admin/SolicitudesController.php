@@ -11,12 +11,12 @@ class Admin_SolicitudesController extends \BaseController {
 	{
 		$models  = ViewSolicitudes::paginate(12);
 
-		$buscarpor = array('orden_id' => 'Orden', 'solicitud' => 'Solicitud');
-		$tableName = 'tab_orden_solicitud';
+		$buscarpor = array('id' => 'Orden', 'solicitud' => 'Solicitud');
+		$tableName = 'view_solicitudes';
 
 		$modelsName = 'solicitudes';
-		$attributes = array('dependencia_id','solicitud', 'consecutivo', 'cliente_id', 'nombre');
-		$attributeNames = array('Dependencia','Solicitud', 'Consecutivo', 'Cliente', 'Municipio');
+		$attributes = array('consecutivo', 'dependencia_id','solicitud', 'cliente_id', 'nombre');
+		$attributeNames = array('Consecutivo', 'Dependencia','Solicitud', 'Cliente', 'Municipio');
         return View::make('admin/layoutlist', compact('models', 'modelsName', 'attributes', 'attributeNames', 'buscarpor', 'tableName'));	
 	}
 
