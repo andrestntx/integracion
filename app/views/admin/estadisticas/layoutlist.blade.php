@@ -57,7 +57,7 @@
       </table>
     </div>
     @if($nombreModelo != 'pendientes')
-      {{ $modelos->appends(array('fechaInicio' => $fechaInicio, 'fechaFinal' => $fechaFinal))->links() }}
+      {{ $modelos->appends(array('fechaInicio' => $fechaInicio, 'fechaFinal' => $fechaFinal, 'ruta' => $ruta))->links() }}
     @else
       {{ $modelos->appends(array('fechaInterventoria' => $fechaInterventoria, 'importacion' => $importacion_id, 
         'importacion_dev' => $devolucion_importacion_id, 'sistemas_importacion_id', 

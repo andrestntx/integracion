@@ -38,30 +38,28 @@ class Admin_EstadisticasController extends \BaseController {
 	public function getEjecuciones(){
 		$fechaInicio = Input::get('fechaInicio');
 		$fechaFinal = Input::get('fechaFinal');
+		$ruta = Input::get('ruta');
 		$itemsPorPagina = 12;
 		$nombreModelo = 'ejecuciones';
 
-		switch (Input::get('ruta')) {
+		switch ($ruta) {
 			case 'ejecuciones':
 				$atributos = array('orden_id', 'fecha', 'cliente_id','servicio_id', 'medidor_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'produccion', 'recuperacion');
 				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Servicio', 'Medidor', 'Municipio', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Produccion', 'Recuperacion');
 				$nombreEstadistica = 'Todas las Ejecuciones';
-				$modelos = Estadisticas::ejecuciones($fechaInicio, $fechaFinal);
-				$modelos = $modelos->paginate($itemsPorPagina);
+				$modelos = Estadisticas::ejecuciones($fechaInicio, $fechaFinal, $itemsPorPagina);
 			break;
 			case 'ejecucionespqr':
 				$atributos = array('orden_id', 'fecha', 'cliente_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'produccion', 'recuperacion');
 				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Municipio', 'Tecnico', 'Estado', 'Produccion', 'Recuperacion');
 				$nombreEstadistica = 'Ejecuciones de Pqr';
-				$modelos = Estadisticas::ejecucionesSolicitud($fechaInicio, $fechaFinal);
-				$modelos = $modelos->paginate($itemsPorPagina);
+				$modelos = Estadisticas::ejecucionesSolicitud($fechaInicio, $fechaFinal, $itemsPorPagina);
 			break;
 			case 'ejecucionesrev':
 				$atributos = array('orden_id', 'fecha', 'cliente_id', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'produccion', 'recuperacion');
 				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Tecnico', 'Estado', 'Proyecto', 'Produccion', 'Recuperacion');
 				$nombreEstadistica = 'Ejecuciones de Campañas';
-				$modelos = Estadisticas::ejecucionesRevision($fechaInicio, $fechaFinal);
-				$modelos = $modelos->paginate($itemsPorPagina);
+				$modelos = Estadisticas::ejecucionesRevision($fechaInicio, $fechaFinal, $itemsPorPagina);
 			break;
 			case 'tecnicos':
 				$page = Input::get('page', 1);
@@ -81,14 +79,14 @@ class Admin_EstadisticasController extends \BaseController {
 				$nombresAtributos = array('Proyecto', 'Asignadas', 'EjecutadasEmsa', 'EjecutadasSypelc', 
 						'Fraude', 'Verificadas', 'Produccion', 'Recuperacion'
 				);
-				return View::make('admin/estadisticas/proyectos', compact('fechaInicio', 'fechaFinal', 'datos', 'atributos', 'nombresAtributos'));
+				return View::make('admin/estadisticas/proyectos', compact('fechaInicio', 'fechaFinal', 'datos', 'atributos', 'nombresAtributos', 'ruta'));
 			break;
 			default:
 				# code...
 			break;
 		}
 
-		return View::make('admin/estadisticas/layoutlist', compact('fechaInicio', 'fechaFinal', 'nombreEstadistica', 'nombreModelo', 'atributos', 'nombresAtributos', 'modelos'));	
+		return View::make('admin/estadisticas/layoutlist', compact('fechaInicio', 'fechaFinal', 'nombreEstadistica', 'nombreModelo', 'atributos', 'nombresAtributos', 'modelos', 'ruta'));	
 	}
 
 	public function getPendientes(){

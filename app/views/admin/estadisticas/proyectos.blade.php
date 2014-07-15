@@ -3,7 +3,7 @@
 @section ('title') Estadistica - Proyectos Sypelc @stop
 
 @section ('breadcrumbs') 
-    {{Breadcrumbs::render('estadisticas/page', 'proyectos')}}
+    {{Breadcrumbs::render('estadisticas/page', 'ejecuciones')}}
 @stop
 
 @section ('content')
@@ -45,5 +45,5 @@
 		      </table>
 		</div>
 
-	{{ $datos->appends(array('fechaInicio' => $fechaInicio, 'fechaFinal' => $fechaFinal))->links() }}
+	{{ $datos->appends(array('fechaInicio' => $fechaInicio, 'fechaFinal' => $fechaFinal, 'ruta' => $ruta))->links() }}
 @stop
