@@ -72,7 +72,7 @@ class ImportFile{
       	}
     }
 	public static function programacionSolicitudes($resultado, $line, $posiciones, $atributos){
-		$orden = $line[$posiciones['dependencia_id']].$line[$posiciones['orden_numero']].$line[$posiciones['consecutivo']];
+		$orden = $line[$posiciones['consecutivo']].$line[$posiciones['dependencia_id']].$line[$posiciones['orden_numero']];
     	$datos = DB::select(DB::raw("select * from fun_import_archivo_programacion_solicitudes('".$resultado."',".$orden.",'".$line[$posiciones['tecnico_nick']]."','".$atributos['fecha']."')"));	
         if($datos[0]->error){
         	return $datos[0]->mensaje;	
@@ -191,8 +191,7 @@ class ImportFile{
         }
 	}
 	public static function solicitudes($resultado, $line, $posiciones, $atributos){
-		$orden_id = $line[$posiciones['dependencia_id']].$line[$posiciones['solicitud_numero']].$line[$posiciones['consecutivo']];
-		
+        $orden_id = $line[$posiciones['consecutivo']].$line[$posiciones['dependencia_id']].$line[$posiciones['solicitud_numero']];	
 		if(Validations::date($line[$posiciones['fechaRealizacion']], 'y-m-d')){
 			$fechaEjecucion = $line[$posiciones['fechaRealizacion']];
 		}
