@@ -25,12 +25,7 @@ Route::get('admin/pruebas', function()
 
 Route::controller('admin/estadisticas', 'Admin_EstadisticasController', array(
 	'getIndex' => 'estadisticas',
-	'getTecnicos' => 'estadisticas/tecnicos',
-	'getPendientes' => 'estadisticas/pendientes',
-	'getProyectos' => 'estadisticas/proyectos',
-	'getEjecuciones' => 'estadisticas/ejecuciones',
-	'getEjecucionespqr' => 'estadisticas/ejecucionespqr',
-	'getEjecucionesrev' => 'estadisticas/ejecucionesrev',
+	'postEjecuciones' => 'estadisticas/ejecuciones', 
 	'getFindmodel' => 'estadisticas/findmodel'
 ));
 

@@ -69,7 +69,7 @@
 					  <div class="panel-body">
 					    <p>Ordene las estadisticas según lo necesite
 					    </p>
-					    {{Form::open(array('url' => 'admin/estadisticas/confecha', 'method' => 'post', 'class' => 'form-horizontal'))}}
+					    {{Form::open(array('url' => 'admin/estadisticas/ejecuciones', 'method' => 'get', 'class' => 'form-horizontal'))}}
 					    	<div class="form-group">
 					    		<label class="control-label col-sm-2">Fecha</label>
 						    	<div id="content-fecha" class="col-sm-5">

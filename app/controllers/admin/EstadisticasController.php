@@ -26,23 +26,69 @@ class Admin_EstadisticasController extends \BaseController {
 		$tipo_orden = TipoOrden::orderBy('id', 'asc')->lists('nombre', 'id');
 
 		$estadisticas = array(
-			'estadisticas/ejecuciones' => 'Todas las Ejecuciones', 
-			'estadisticas/ejecucionespqr' => 'Solicitudes Ejecutadas', 
-			'estadisticas/ejecucionesrev' => 'Campañas Ejecutadas', 
-			'estadisticas/tecnicos' => 'Tecnicos', 
-			'estadisticas/proyectos' => 'Proyectos'
+			'ejecuciones' => 'Todas las Ejecuciones', 
+			'ejecucionespqr' => 'Solicitudes Ejecutadas', 
+			'ejecucionesrev' => 'Campañas Ejecutadas', 
+			'tecnicos' => 'Tecnicos', 
+			'proyectos' => 'Proyectos'
 		);
 		return View::make('admin/estadisticas/inicio', compact('ruta', 'revision', 'solicitudes', 'estadisticas', 'devolucion', 'sistemas', 'tipo_orden'));
 	}
 
-	public function postConfecha(){
+	public function getEjecuciones(){
 		$fechaInicio = Input::get('fechaInicio');
 		$fechaFinal = Input::get('fechaFinal');
+		$itemsPorPagina = 12;
+		$nombreModelo = 'ejecuciones';
 
-		//return Redirect::to(Input::get('ruta'))->with('fechaInicio',$fechaInicio);
+		switch (Input::get('ruta')) {
+			case 'ejecuciones':
+				$atributos = array('orden_id', 'fecha', 'cliente_id','servicio_id', 'medidor_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'produccion', 'recuperacion');
+				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Servicio', 'Medidor', 'Municipio', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Produccion', 'Recuperacion');
+				$nombreEstadistica = 'Todas las Ejecuciones';
+				$modelos = Estadisticas::ejecuciones($fechaInicio, $fechaFinal);
+				$modelos = $modelos->paginate($itemsPorPagina);
+			break;
+			case 'ejecucionespqr':
+				$atributos = array('orden_id', 'fecha', 'cliente_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'produccion', 'recuperacion');
+				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Municipio', 'Tecnico', 'Estado', 'Produccion', 'Recuperacion');
+				$nombreEstadistica = 'Ejecuciones de Pqr';
+				$modelos = Estadisticas::ejecucionesSolicitud($fechaInicio, $fechaFinal);
+				$modelos = $modelos->paginate($itemsPorPagina);
+			break;
+			case 'ejecucionesrev':
+				$atributos = array('orden_id', 'fecha', 'cliente_id', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'produccion', 'recuperacion');
+				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Tecnico', 'Estado', 'Proyecto', 'Produccion', 'Recuperacion');
+				$nombreEstadistica = 'Ejecuciones de Campañas';
+				$modelos = Estadisticas::ejecucionesRevision($fechaInicio, $fechaFinal);
+				$modelos = $modelos->paginate($itemsPorPagina);
+			break;
+			case 'tecnicos':
+				$page = Input::get('page', 1);
+				$nombreEstadistica = 'Datos por Tecnico';
+				$resultado = DB::select(DB::raw("select * from fun_ejecuciones_groupby_tecnico('".$fechaInicio."','".$fechaFinal."') "));
+				$pages = array_chunk($resultado, 12);
+				$modelos = Paginator::make($pages[$page -1], count($resultado), $itemsPorPagina);
+				$atributos = array('nombre', 'ejecutadas_sypelc', 'fraudes_sypelc', 'verificadas_sypelc', 'produccion_sypelc', 'recuperacion_sypelc');
+				$nombresAtributos = array('Tecnico', 'EjecutadasSypelc', 'Fraude', 'Verificadas', 'Produccion', 'Recuperacion');
+			break;
+			case 'proyectos':
+				$page = Input::get('page', 1);
+				$resultado = DB::select(DB::raw("select * from fun_ejecuciones_groupby_proyectos('".$fechaInicio."','".$fechaFinal."')"));
+				$pages = array_chunk($resultado, 12);
+				$datos = Paginator::make($pages[$page -1], count($resultado), $itemsPorPagina);
+				$atributos = array('proyecto_id', 'asignadas_emsa', 'ejecutadas_emsa', 'ejecutadas_sypelc', 'fraudes_sypelc', 'verificadas_sypelc', 'produccion_sypelc', 'recuperacion_sypelc');
+				$nombresAtributos = array('Proyecto', 'Asignadas', 'EjecutadasEmsa', 'EjecutadasSypelc', 
+						'Fraude', 'Verificadas', 'Produccion', 'Recuperacion'
+				);
+				return View::make('admin/estadisticas/proyectos', compact('fechaInicio', 'fechaFinal', 'datos', 'atributos', 'nombresAtributos'));
+			break;
+			default:
+				# code...
+			break;
+		}
 
-
-		return Redirect::route(Input::get('ruta'), array('fechaInicio' => $fechaInicio, 'fechaFinal' => $fechaFinal));
+		return View::make('admin/estadisticas/layoutlist', compact('fechaInicio', 'fechaFinal', 'nombreEstadistica', 'nombreModelo', 'atributos', 'nombresAtributos', 'modelos'));	
 	}
 
 	public function getPendientes(){
@@ -104,24 +150,6 @@ class Admin_EstadisticasController extends \BaseController {
 		SimpleCsv::export($datos, $titulos);	
 	}
 
-	public function getEjecuciones(){
-		$fechaInicio = Input::get('fechaInicio');
-		$fechaFinal = Input::get('fechaFinal');
-
-		$atributos = array('orden_id', 'fecha', 'cliente_id','servicio_id', 'medidor_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'produccion', 'recuperacion');
-		$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Servicio', 'Medidor', 'Municipio', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Produccion', 'Recuperacion');
-		$nombreEstadistica = 'Todas las Ejecuciones';
-		$nombreModelo = 'ejecuciones';
-
-		$modelos = DB::table('view_ejecuciones_sypelc')
-			->where('fecha', '>', $fechaInicio)
-				->where('fecha', '<', $fechaFinal)
-						->orderBy('fecha', 'desc')
-							->paginate(12);
-		
-		return View::make('admin/estadisticas/layoutlist', compact('fechaInicio', 'fechaFinal', 'nombreEstadistica', 'nombreModelo', 'atributos', 'nombresAtributos', 'modelos', 'totales'));
-	}
-
 	public function postEjecuciones(){
 		$fechaInicio = Input::get('fechaInicio');
 		$fechaFinal = Input::get('fechaFinal');
@@ -138,25 +166,6 @@ class Admin_EstadisticasController extends \BaseController {
 		SimpleCsv::export($datos, $titulos);	
 	}
 
-	public function getEjecucionesrev(){
-		/*$fechaInicio = Input::get('fechaInicio');
-		$fechaFinal = Input::get('fechaFinal');
-
-		$atributos = array('orden_id', 'fecha', 'cliente_id', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'produccion', 'recuperacion');
-		$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Tecnico', 'Estado', 'Proyecto', 'Produccion', 'Recuperacion');
-		$nombreEstadistica = 'Ejecuciones de Campañas';
-		$nombreModelo = 'ejecucionesrev';
-
-		$modelos = DB::table('view_ejecuciones_sypelc')
-			->where('fecha', '>', $fechaInicio)
-				->where('fecha', '<', $fechaFinal)
-					->where('nombre', '=', 'REVISION')	
-						->orderBy('fecha', 'desc')
-							->paginate(12);
-		
-		return View::make('admin/estadisticas/layoutlist', compact('fechaInicio', 'fechaFinal', 'nombreEstadistica', 'nombreModelo', 'atributos', 'nombresAtributos', 'modelos', 'totales'));
-	*/}
-
 	public function postEjecucionesrev(){
 		$fechaInicio = Input::get('fechaInicio');
 		$fechaFinal = Input::get('fechaFinal');
@@ -172,25 +181,6 @@ class Admin_EstadisticasController extends \BaseController {
 		$titulos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Tecnico', 'Estado', 'Proyecto', 'Produccion', 'Recuperacion');
 
 		SimpleCsv::export($datos, $titulos);	
-	}
-
-	public function getEjecucionespqr(){
-		$fechaInicio = Input::get('fechaInicio');
-		$fechaFinal = Input::get('fechaFinal');
-
-		$atributos = array('orden_id', 'fecha', 'cliente_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'produccion', 'recuperacion');
-		$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Municipio', 'Tecnico', 'Estado', 'Produccion', 'Recuperacion');
-		$nombreEstadistica = 'Ejecuciones de Pqr';
-		$nombreModelo = 'ejecucionespqr';
-
-		$modelos = DB::table('view_ejecuciones_sypelc')
-			->where('fecha', '>', $fechaInicio)
-				->where('fecha', '<', $fechaFinal)
-					->where('nombre', '=', 'SOLICITUD')	
-						->orderBy('fecha', 'desc')
-							->paginate(12);
-		
-		return View::make('admin/estadisticas/layoutlist', compact('fechaInicio', 'fechaFinal', 'nombreEstadistica', 'nombreModelo', 'atributos', 'nombresAtributos', 'modelos', 'totales'));
 	}
 
 	public function postEjecucionespqr(){
@@ -210,23 +200,6 @@ class Admin_EstadisticasController extends \BaseController {
 		SimpleCsv::export($datos, $titulos);	
 	}
 
-	public function getTecnicos(){
-		$fechaInicio = Input::get('fechaInicio');
-		$fechaFinal = Input::get('fechaFinal');
-		$page = Input::get('page', 1);
-		$nombreEstadistica = 'Datos por Tecnico';
-		$nombreModelo = 'tecnicos';
-
-		$resultado = DB::select(DB::raw("select * from fun_ejecuciones_groupby_tecnico('".$fechaInicio."','".$fechaFinal."') "));
-
-		$pages = array_chunk($resultado, 12);
-		$modelos = Paginator::make($pages[$page -1], count($resultado), 12);
-		$atributos = array('nombre', 'ejecutadas_sypelc', 'fraudes_sypelc', 'verificadas_sypelc', 'produccion_sypelc', 'recuperacion_sypelc');
-		$nombresAtributos = array('Tecnico', 'EjecutadasSypelc', 'Fraude', 'Verificadas', 'Produccion', 'Recuperacion');
-
-		return View::make('admin/estadisticas/layoutlist', compact('fechaInicio', 'fechaFinal', 'nombreEstadistica', 'nombreModelo', 'atributos', 'nombresAtributos', 'modelos'));
-	}
-
 	public function postTecnicos(){
 		$fechaInicio = Input::get('fechaInicio');
 		$fechaFinal = Input::get('fechaFinal');
@@ -235,22 +208,6 @@ class Admin_EstadisticasController extends \BaseController {
 
 		$titulos = array('Cedula Tecnico', 'Nick Tecnico', 'Nombre Tecnico', 'EjecutadasSypelc', 'Fraude', 'Verificadas', 'Produccion', 'Recuperacion');
 		SimpleCsv::export($resultado, $titulos);	
-	}
-
-	public function getProyectos(){
-		$fechaInicio = Input::get('fechaInicio');
-		$fechaFinal = Input::get('fechaFinal');
-		$page = Input::get('page', 1);
-
-		$resultado = DB::select(DB::raw("select * from fun_ejecuciones_groupby_proyectos('".$fechaInicio."','".$fechaFinal."')"));
-		$pages = array_chunk($resultado, 12);
-		$datos = Paginator::make($pages[$page -1], count($resultado), 12);
-		$atributos = array('proyecto_id', 'asignadas_emsa', 'ejecutadas_emsa', 'ejecutadas_sypelc', 'fraudes_sypelc', 'verificadas_sypelc', 'produccion_sypelc', 'recuperacion_sypelc');
-		$nombresAtributos = array('Proyecto', 'Asignadas', 'EjecutadasEmsa', 'EjecutadasSypelc', 
-				'Fraude', 'Verificadas', 'Produccion', 'Recuperacion'
-		);
-
-		return View::make('admin/estadisticas/proyectos', compact('fechaInicio', 'fechaFinal', 'datos', 'atributos', 'nombresAtributos'));
 	}
 
 	public function postProyectos(){
