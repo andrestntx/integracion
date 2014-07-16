@@ -36,12 +36,12 @@ class Conversions{
 	}
 	public static function dateES_to_dateEN($dateES, $delimiter ='-'){
         $date = explode($delimiter, $dateES);
-        if(sizeof($date) >= 2){
-            return date('d-m-y', strtotime($date[2].'-'.self::$monthnumbersES[strtoupper($date[1])].'-'.$date[0]));
+        if(sizeof($date) > 2){
+        	if(is_numeric($date[2]) && !is_numeric($date[1]) && array_key_exists(strtoupper($date[1]), self::$monthnumbersES) && is_numeric($date[0])){
+            	return date('d-m-y', strtotime($date[2].'-'.self::$monthnumbersES[strtoupper($date[1])].'-'.$date[0]));
+            }
         }
-        else{
-            return null;
-        }
+        return null;
     }
     public static function removeAccents($word){
 

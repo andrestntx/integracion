@@ -16,7 +16,7 @@ class Validations{
                     if(!is_numeric($orden_id)){
                         $motivo = 1;
                     }
-                    else if(!Validations::date($line[$posiciones['fechaAsignacion']], 'Y-m-d') && !Validations::date($line[$posiciones['fechaAsignacion']])){
+                    else if(!Validations::date($line[$posiciones['fechaAsignacion']], 'm-d-y') && !Validations::date($line[$posiciones['fechaAsignacion']], 'm-d-Y') && !Validations::date($line[$posiciones['fechaAsignacion']], 'Y-m-d') && !Validations::date($line[$posiciones['fechaAsignacion']])){
                         $motivo = 3;    
                     }
                     break;
