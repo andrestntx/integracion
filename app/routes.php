@@ -19,8 +19,7 @@ Route::get('/', function()
 
 Route::get('admin/pruebas', function()
 {
-	var_dump($_ENV);
-
+	
 });
 
 Route::controller('admin/estadisticas', 'Admin_EstadisticasController', array(
