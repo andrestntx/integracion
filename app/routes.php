@@ -19,7 +19,11 @@ Route::get('/', function()
 
 Route::get('admin/pruebas', function()
 {
-	
+	//$date = new DateTime();
+	$date = date('d-m-Y', strtotime('+1 day'));
+	echo " ".$date;
+	//$date->sub(new DateInterval('P2D'));
+	//echo $date->format('d-m-Y H:i:s');
 });
 
 Route::controller('admin/estadisticas', 'Admin_EstadisticasController', array(

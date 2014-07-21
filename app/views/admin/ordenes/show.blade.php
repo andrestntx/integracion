@@ -14,6 +14,9 @@
         <td>Proyecto:</td> <td>{{$orden->proyecto_id}}</td>
       </tr>
       <tr>
+        <td>Tipo:</td> <td>{{$orden->tipo_id}}</td>
+      </tr>
+      <tr>
        <th>Cliente</th>
       </tr>
       <tr>
