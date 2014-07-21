@@ -107,8 +107,8 @@ class Admin_EstadisticasController extends \BaseController {
 		}
 		else{
 			$resultado = DB::select(DB::raw("select * from fun_pendientes_solicitudes('".$fechaInterventoria."','".$importacion_id."','".$devolucion_importacion_id."','".$sistemas_importacion_id."')"));		
-			$atributos = array('cliente_id', 'cliente_nombre', 'cliente_direccion', 'municipio', 'servicio_id', 'ubicacion_ur', 'medidor' ,'orden_id','fecha_generacion', 'estado');
-
+			$atributos = array('cliente_id', 'cliente_nombre', 'cliente_direccion', 'municipio', 'servicio_id', 'ubicacion_ur', 'medidor' ,'orden_id','tipo_id', 'fecha_generacion', 'estado');
+			$nombresAtributos = array('Cuenta','Nombre', 'Direccion', 'Municipio', 'Servicio', 'U','Medidor', 'Orden','Tipo', 'Generacion', 'Estado');
 		}
 		if(!$resultado){
 			return View::make('admin/estadisticas/notfound', 
@@ -141,7 +141,7 @@ class Admin_EstadisticasController extends \BaseController {
 		}
 		else{
 			$datos = DB::select(DB::raw("select * from fun_pendientes_solicitudes('".$fechaInterventoria."','".$importacion_id."','".$devolucion_importacion_id."','".$sistemas_importacion_id."')"));		
-			$titulos = array('Orden', 'Dependencia', 'Solicitud', 'Consecutivo', 'Cuenta','Nombre', 'Direccion', 'Ubicacion', 'Municipio', 'Servicio','Medidor', 'Generacion', 'Estado', 'Prog', 'Eje', 'Dev', 'Updated', 'Entrega', 'Sistemas');
+			$titulos = array('Orden', 'Dependencia', 'Solicitud', 'Consecutivo', 'Tipo', 'Cuenta','Nombre', 'Direccion', 'Ubicacion', 'Municipio', 'Servicio','Medidor', 'Generacion', 'Estado', 'Prog', 'Eje', 'Dev', 'Updated', 'Entrega', 'Sistemas');
 
 		}
 

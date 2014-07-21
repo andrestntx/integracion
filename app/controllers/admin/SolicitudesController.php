@@ -15,8 +15,8 @@ class Admin_SolicitudesController extends \BaseController {
 		$tableName = 'view_solicitudes';
 
 		$modelsName = 'solicitudes';
-		$attributes = array('consecutivo', 'dependencia_id','solicitud', 'cliente_id', 'nombre');
-		$attributeNames = array('Consecutivo', 'Dependencia','Solicitud', 'Cliente', 'Municipio');
+		$attributes = array('consecutivo', 'dependencia_id','solicitud', 'tipo_id', 'cliente_id', 'nombre');
+		$attributeNames = array('Consecutivo', 'Dependencia','Solicitud', 'Tipo', 'Cliente', 'Municipio');
         return View::make('admin/layoutlist', compact('models', 'modelsName', 'attributes', 'attributeNames', 'buscarpor', 'tableName'));	
 	}
 
