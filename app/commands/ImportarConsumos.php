@@ -45,9 +45,19 @@ class ImportarConsumos extends Command {
 	    $nosypelc = 0;
 	    $respuesta = null;
 
-	    $posiciones = ViewVariablesImportacion::where('archivo_id', '=', $tipoArchivo->id)->lists('posicion_csv', 'nombre');
-		$datos = DB::connection('oracle')->select(DB::raw("select consecutivo_accion, periodo, cuenta, medidor, con_contador, marca, serie, tipo_energia, fecha_tomada, fecha_anterior, lectura_tomada, lectura_anterior, consumo, tipo_observacion, descripcion from sgd_consumos_orden_pda where fecha_ins >= to_date('01/10/2012') and fecha_ins <= to_date('01/12/2012', 'dd/mm/yyyy')"));
+	    $date_yesterday = new DateTime();
+		$date_yesterday->sub(new DateInterval('P1D'));
 
+		$date_tomorrow = date('d-m-Y', strtotime('+1 day'));
+
+	    $posiciones = ViewVariablesImportacion::where('archivo_id', '=', $tipoArchivo->id)->lists('posicion_csv', 'nombre');
+		$datos = DB::connection('oracle')->select(DB::raw("
+			select consecutivo_accion, periodo, cuenta, medidor, con_contador, marca, serie, tipo_energia, fecha_tomada, 
+			fecha_anterior, lectura_tomada, lectura_anterior, consumo, tipo_observacion, descripcion from sgd_consumos_orden_pda 
+			where fecha_ins >= to_date('".$date_yesterday->format('d/m/Y')."','dd/mm/yyyy') and 
+			fecha_ins <= to_date('".$date_tomorrow."','dd/mm/yyyy')
+		"));
+		//$datos = DB::connection('oracle')->select(DB::raw("select consecutivo_accion, periodo, cuenta, medidor, con_contador, marca, serie, tipo_energia, fecha_tomada, fecha_anterior, lectura_tomada, lectura_anterior, consumo, tipo_observacion, descripcion from sgd_consumos_orden_pda where fecha_ins >= to_date('01/12/2013') and fecha_ins <= to_date('01/12/2014', 'dd/mm/yyyy')"));
 		$datos = Conversions::remove_key_from_array($datos);
 
 		foreach ($datos as $line) {
