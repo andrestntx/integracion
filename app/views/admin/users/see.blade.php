@@ -4,10 +4,10 @@
 
 @section ('content')
 
-<h2>User #{{ $user->id }}</h2>
+<h2>Usuario: {{ $user->username }}</h2>
 
-<p>Full name: {{ $user->full_name }}</p>
-<p>Email: {{ $user->email }}</p>
+<p style="font-size:16px">Nombre: {{ $user->name }}</p>
+<p style="font-size:16px">Email: {{ $user->email }}</p>
 
 <p>
   <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">

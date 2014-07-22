@@ -28,8 +28,14 @@
       {{ Form::text('email', null, array('placeholder' => 'Introduce tu E-mail', 'class' => 'form-control')) }}
     </div>
     <div class="form-group col-md-4">
-      {{ Form::label('full_name', 'Nombre completo') }}
-      {{ Form::text('full_name', null, array('placeholder' => 'Introduce tu nombre y apellido', 'class' => 'form-control')) }}        
+      {{ Form::label('username', 'Nombre Usuario') }}
+      {{ Form::text('username', null, array('placeholder' => 'Introduce tu nombre de usuario', 'class' => 'form-control')) }}        
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-4">
+      {{ Form::label('name', 'Nombre completo') }}
+      {{ Form::text('name', null, array('placeholder' => 'Introduce tu nombre y apellido', 'class' => 'form-control')) }}        
     </div>
   </div>
   <div class="row">

@@ -7,6 +7,14 @@ class Admin_UsersController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+
+    public function __construct() {
+        $this->beforeFilter('csrf', array('on'=>'post'));
+        $this->beforeFilter('auth', array('only'=>
+            array('index', 'create', 'store', 'update', 
+                'destroy', 'show', 'edit')));
+    }
+
 	public function index()
 	{
 		$users = User::paginate(4);
@@ -139,11 +147,11 @@ class Admin_UsersController extends \BaseController {
 
         if (Request::ajax())
         {
-            return Response::json(array (
+            /*return Response::json(array (
                 'success' => true,
-                'msg'     => 'Usuario ' . $user->full_name . ' eliminado',
+                'msg'     => 'Usuario ' . $user->name . ' eliminado',
                 'id'      => $user->id
-            ));
+            ));*/
         }
         else
         {

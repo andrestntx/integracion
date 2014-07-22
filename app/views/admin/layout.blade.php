@@ -51,6 +51,9 @@
                   <li>{{ HTML::link('admin/solicitudes', 'Solicitudes')}}</li>
                 </ul>
               </li>
+              @if(Auth::user()->username == 'lindaguzman')
+                <li>{{ HTML::link('admin/users', 'Usuarios')}}</li>
+              @endif
             </ul>
             <ul class="nav navbar-nav navbar-right">
             @if(!Auth::check())
