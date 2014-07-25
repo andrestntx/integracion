@@ -16,6 +16,10 @@ Route::get('/', function()
 	return Redirect::to('admin');
 });
 
+Route::get('admin/saludito', function()
+{
+	echo " hola amigos";
+});
 
 Route::get('admin/pruebas', function()
 {
