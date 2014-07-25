@@ -24,8 +24,15 @@
             {{ Form::hidden('modelsName', $modelsName)}}
             {{ Form::hidden('tableName', $tableName)}}
           {{ Form::close() }}
-    </div>
+        </div>
       </div>
+    <div class="col-md-2">
+      @if ($modelsName == 'revisiones' || $modelsName == 'solicitudes')
+        {{Form::open(array('url' => 'admin/estadisticas/'.$modelsName, 'method' => 'post'))}}
+          {{ Form::button('Descargar', array('type' => 'submit', 'class' => 'btn btn-primary')) }}  
+        {{ Form::close() }}
+      @endif
+    </div>
     </div>
     <div class="col-md-12">
       <table class="table table-striped ">

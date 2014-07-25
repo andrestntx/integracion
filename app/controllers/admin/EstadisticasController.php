@@ -44,20 +44,20 @@ class Admin_EstadisticasController extends \BaseController {
 
 		switch ($ruta) {
 			case 'ejecuciones':
-				$atributos = array('orden_id', 'fecha', 'cliente_id','servicio_id', 'medidor_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'produccion', 'recuperacion');
-				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Servicio', 'Medidor', 'Municipio', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Produccion', 'Recuperacion');
+				$atributos = array('orden_id', 'fecha', 'cliente_id','servicio_id', 'medidor_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'acta', 'oficio', 'produccion', 'recuperacion');
+				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Servicio', 'Medidor', 'Municipio', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Acta', 'Oficio', 'Produccion', 'Recuperacion');
 				$nombreEstadistica = 'Todas las Ejecuciones';
 				$modelos = Estadisticas::ejecuciones($fechaInicio, $fechaFinal, $itemsPorPagina);
 			break;
 			case 'ejecucionespqr':
-				$atributos = array('orden_id', 'fecha', 'cliente_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'produccion', 'recuperacion');
-				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Municipio', 'Tecnico', 'Estado', 'Produccion', 'Recuperacion');
+				$atributos = array('orden_id', 'fecha', 'cliente_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'aforo', 'acta', 'oficio', 'produccion', 'recuperacion');
+				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Municipio', 'Tecnico', 'Estado', 'Aforo', 'Acta', 'Oficio', 'Produccion', 'Recuperacion');
 				$nombreEstadistica = 'Ejecuciones de Pqr';
 				$modelos = Estadisticas::ejecucionesSolicitud($fechaInicio, $fechaFinal, $itemsPorPagina);
 			break;
 			case 'ejecucionesrev':
-				$atributos = array('orden_id', 'fecha', 'cliente_id', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'produccion', 'recuperacion');
-				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Tecnico', 'Estado', 'Proyecto', 'Produccion', 'Recuperacion');
+				$atributos = array('orden_id', 'fecha', 'cliente_id', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'acta', 'oficio', 'produccion', 'recuperacion');
+				$nombresAtributos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Acta', 'Oficio', 'Produccion', 'Recuperacion');
 				$nombreEstadistica = 'Ejecuciones de Campañas';
 				$modelos = Estadisticas::ejecucionesRevision($fechaInicio, $fechaFinal, $itemsPorPagina);
 			break;
@@ -156,10 +156,10 @@ class Admin_EstadisticasController extends \BaseController {
 			->where('fecha', '>', $fechaInicio)
 				->where('fecha', '<', $fechaFinal)
 					->orderBy('recuperacion', 'asc')
-						->select('orden_id', 'fecha', 'cliente_id', 'servicio_id', 'medidor_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'produccion', 'recuperacion')
+						->select('orden_id', 'fecha', 'cliente_id', 'servicio_id', 'medidor_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'acta', 'oficio', 'produccion', 'recuperacion')
 							->get();
 
-		$titulos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Servicio', 'Medidor', 'Municipio', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Produccion', 'Recuperacion');
+		$titulos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Servicio', 'Medidor', 'Municipio', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Acta', 'Oficio', 'Produccion', 'Recuperacion');
 
 		SimpleCsv::export($datos, $titulos);	
 	}
@@ -173,10 +173,10 @@ class Admin_EstadisticasController extends \BaseController {
 				->where('fecha', '<', $fechaFinal)
 					->where('nombre', '=', 'REVISION')	
 						->orderBy('recuperacion', 'asc')
-							->select('orden_id', 'fecha', 'cliente_id', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'produccion', 'recuperacion')
+							->select('orden_id', 'fecha', 'cliente_id', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'acta', 'oficio', 'produccion', 'recuperacion')
 								->get();
 
-		$titulos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Tecnico', 'Estado', 'Proyecto', 'Produccion', 'Recuperacion');
+		$titulos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Acta', 'Oficio', 'Produccion', 'Recuperacion');
 
 		SimpleCsv::export($datos, $titulos);	
 	}
@@ -190,10 +190,10 @@ class Admin_EstadisticasController extends \BaseController {
 				->where('fecha', '<', $fechaFinal)
 					->where('nombre', '=', 'SOLICITUD')	
 						->orderBy('fecha', 'desc')
-							->select('orden_id', 'fecha', 'cliente_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'produccion', 'recuperacion')
+							->select('orden_id', 'fecha', 'cliente_id', 'municipio_nombre', 'tecnico_nombre', 'estado_fv', 'proyecto_id', 'aforo', 'acta', 'oficio', 'produccion', 'recuperacion')
 								->get();
 
-		$titulos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Municipio', 'Tecnico', 'Estado', 'Proyecto', 'Produccion', 'Recuperacion');
+		$titulos = array('Orden', 'Fecha Atencion', 'Cuenta', 'Municipio', 'Tecnico', 'Estado', 'Proyecto', 'Aforo', 'Acta', 'Oficio', 'Produccion', 'Recuperacion');
 
 		SimpleCsv::export($datos, $titulos);	
 	}
@@ -220,6 +220,20 @@ class Admin_EstadisticasController extends \BaseController {
 		SimpleCsv::export($datos, $titulos);	
 	}
 
+	public function postRevisiones(){
+		$datos = DB::select(DB::raw("select * from view_revisiones"));
+		$titulos = array('Orden','Proyecto', 'Cliente', 'Municipio', 'Estado Actual');
+
+		SimpleCsv::export($datos, $titulos);	
+	}
+
+	public function postSolicitudes(){
+		$datos = DB::select(DB::raw("select * from view_solicitudes"));
+		$titulos= array('Orden', 'Dependencia', 'Solicitud', 'Consecutivo', 'Cliente', 'Municipio', 'Tipo');
+
+		SimpleCsv::export($datos, $titulos);	
+	}
+
 	public function getFindmodel(){
 		$modelsName = Input::get('modelsName');
 		$tableName = Input::get('tableName');
@@ -241,7 +255,12 @@ class Admin_EstadisticasController extends \BaseController {
 
 		if($models){
 			if($numModels == 1){
-				return Redirect::route('admin.'.$modelsName.'.show', array($models->id));
+				if($modelsName == 'revisiones'){
+					return Redirect::route('admin.'.$modelsName.'.show', array($models->orden_id));
+				}
+				else{
+					return Redirect::route('admin.'.$modelsName.'.show', array($models->id));
+				}
 			}
 			else{
 				$attributes = array('consecutivo', 'dependencia_id','solicitud', 'cliente_id', 'nombre');

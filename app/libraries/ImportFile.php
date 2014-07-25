@@ -125,6 +125,13 @@ class ImportFile{
 			$orden_id = -1 * $line[$posiciones['orden_acta']]; 
 		}
 
+		if(!is_numeric($line[$posiciones['cliente_cuenta']]) && $orden_id > 0){
+			$line[$posiciones['cliente_cuenta']] = -1 * $orden_id; 
+		}
+		else if(!is_numeric($line[$posiciones['cliente_cuenta']]) && $orden_id < 0){
+			$line[$posiciones['cliente_cuenta']] =  $orden_id; 
+		}
+
 		$aforo=0;
 		if(is_numeric($line[$posiciones['aforo']])){
 			$aforo = $line[$posiciones['aforo']];
@@ -137,6 +144,10 @@ class ImportFile{
  		
  		if(!is_numeric($line[$posiciones['medidorEncontrado_lectura']])){
  			$line[$posiciones['medidorEncontrado_lectura']] = 'null';
+ 		}
+
+ 		if(!is_numeric($line[$posiciones['oficio']])){
+ 			$line[$posiciones['oficio']] = 0;
  		}
 
  		if(!is_numeric($line[$posiciones['orden_consecutivo']])){
@@ -159,11 +170,22 @@ class ImportFile{
 		}
 		$irregularidadestexto = implode(",", $irregularidades);
 
-		$datos = DB::select( DB::raw("select * from fun_import_archivo_factura('".$resultado."','".$municipio_nombre."','".$line[$posiciones['cliente_ubicacionUR']]."',".$orden_id.",'".$line[$posiciones['orden_consecutivo']]."','".$line[$posiciones['fechaRealizacion']]."','".$line[$posiciones['orden_acta']]."','".$line[$posiciones['fechaEntregaOficio']]."','".$line[$posiciones['medidorEncontrado_serie']]."','".$line[$posiciones['medidorEncontrado_marca']]."',".round($line[$posiciones['medidorEncontrado_lectura']]).",'".$line[$posiciones['medidorInstalado_serie']]."','".$line[$posiciones['medidorInstalado_marca']]."',".round($line[$posiciones['medidorInstalado_lectura']]).",'".$line[$posiciones['tecnico_nombre']]."',".$aforo.",'".$line[$posiciones['orden_estadoFV']]."','{".$valorestexto."}','{".$irregularidadestexto."}', '".$line[$posiciones['cliente_cuenta']]."')"));		
+		$datos = DB::select( DB::raw("select * from fun_import_archivo_factura(
+			'".$resultado."','".$municipio_nombre."','".$line[$posiciones['cliente_ubicacionUR']]."',".$orden_id.",
+			'".$line[$posiciones['orden_consecutivo']]."','".$line[$posiciones['fechaRealizacion']]."','".$line[$posiciones['orden_acta']]."',
+			'".$line[$posiciones['fechaEntregaOficio']]."','".$line[$posiciones['medidorEncontrado_serie']]."',
+			'".$line[$posiciones['medidorEncontrado_marca']]."',".round($line[$posiciones['medidorEncontrado_lectura']]).",
+			'".$line[$posiciones['medidorInstalado_serie']]."','".$line[$posiciones['medidorInstalado_marca']]."',
+			".round($line[$posiciones['medidorInstalado_lectura']]).",'".$line[$posiciones['tecnico_nombre']]."',".$aforo.",
+			'".$line[$posiciones['orden_estadoFV']]."','{".$valorestexto."}','{".$irregularidadestexto."}', 
+			'".$line[$posiciones['cliente_cuenta']]."',".$line[$posiciones['oficio']].")"
+		));		
+
 		if($datos[0]->error){
         	return $datos[0]->mensaje;	
         }
 	}
+	
 	public static function revisiones($resultado, $line, $posiciones, $atributos){
 		$fechaGeneracion = Conversions::dateES_to_dateEN($line[$posiciones['fechaGeneracion']]);
 		$municipio_nombre = ucwords(strtolower($line[$posiciones['municipio_nombre']]));
