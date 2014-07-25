@@ -16,7 +16,6 @@ Route::get('/', function()
 	return Redirect::to('admin');
 });
 
-
 Route::get('admin/pruebas', function()
 {
 	//$date = new DateTime();

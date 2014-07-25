@@ -17,7 +17,7 @@ class Admin_UsersController extends \BaseController {
 
 	public function index()
 	{
-		$users = User::paginate(4);
+		$users = User::paginate(12);
         return View::make('admin/users/list')->with('users', $users);
 	}
 

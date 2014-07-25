@@ -125,6 +125,13 @@ class ImportFile{
 			$orden_id = -1 * $line[$posiciones['orden_acta']]; 
 		}
 
+		if(!is_numeric($line[$posiciones['cliente_cuenta']]) && $orden_id > 0){
+			$line[$posiciones['cliente_cuenta']] = -1 * $orden_id; 
+		}
+		else if(!is_numeric($line[$posiciones['cliente_cuenta']]) && $orden_id < 0){
+			$line[$posiciones['cliente_cuenta']] =  $orden_id; 
+		}
+
 		$aforo=0;
 		if(is_numeric($line[$posiciones['aforo']])){
 			$aforo = $line[$posiciones['aforo']];
@@ -164,6 +171,7 @@ class ImportFile{
         	return $datos[0]->mensaje;	
         }
 	}
+	
 	public static function revisiones($resultado, $line, $posiciones, $atributos){
 		$fechaGeneracion = Conversions::dateES_to_dateEN($line[$posiciones['fechaGeneracion']]);
 		$municipio_nombre = ucwords(strtolower($line[$posiciones['municipio_nombre']]));
