@@ -1,5 +1,5 @@
-importFile-laravel
+#Integración de Archivos para Sypelc - Laravel 4
 
-Desarrollo en laravel, postgres y oracle que importa archivos planos en las bases de datos y permite administrar la información
+De los primeros proyectos que realicé en mi aprendizaje de Laravel. Combina el manejo de base de datos (Postgres y Oracle).
 
-Probando un cambio
+Importa datos en archivos plano del proceso que lleva la emprsa Sypelc ltda en Villavicencio, permitiendo administrar la información y obtener datos estadísticos. 
